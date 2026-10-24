@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Income {
+  id          String   @id @default(cuid())
+  platform    String   // Uber Eats, Deliveroo, Just Eat, Stuart, Other
+  amount      Float
+  date        DateTime
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Mileage {
+  id          String   @id @default(cuid())
+  date        DateTime
+  miles       Float
+  purpose     String   @default("delivery")
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  category    String   // fuel, insurance, repairs, phone, equipment, cleaning, parking, tolls, other
+  amount      Float
+  date        DateTime
+  description String?
+  receipt     String?  // path to receipt file
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TaxYear {
+  id              String   @id @default(cuid())
+  year            String   // e.g., "2024/25"
+  personalAllowance Float  @default(12570)
+  basicRateLimit  Float    @default(50270)
+  higherRateLimit Float    @default(125140)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
